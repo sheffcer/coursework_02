@@ -25,20 +25,15 @@
       </div> -->
       <app-avatar></app-avatar>
       <app-subtitle :title="Опыт"></app-subtitle>
-      <!-- <p>
-        главный герой американского мультсериала «Рик и Морти», гениальный учёный, изобретатель, атеист (хотя в некоторых сериях он даже молится Богу, однако, каждый раз после чудесного спасения ссылается на удачу и вновь отвергает его существование), алкоголик, социопат, дедушка Морти. На момент начала третьего сезона ему 70 лет[1]. Рик боится пиратов, а его главной слабостью является некий - "Санчезиум". Исходя из того, что существует неограниченное количество вселенных, существует неограниченное количество Риков, герой сериала предположительно принадлежит к измерению С-137. В серии комикcов Рик относится к измерению C-132, а в игре «Pocket Mortys» — к измерению C-123[2]. Прототипом Рика Санчеза является Эмметт Браун, герой кинотрилогии «Назад в будущее»[3].
-      </p> -->
       <app-text></app-text>
       <h3 v-if="blocks.length !==0">Добавьте первый блок, чтобы увидеть результат</h3>
     </div>
   </div>
   <div class="container">
     <p>
-      <!-- <button class="btn primary">Загрузить комментарии</button> -->
       <app-button color="primary" type="submit">{{download}}</app-button>
     </p>
     <div class="card">
-      <!-- <h2>Комментарии</h2> -->
       <app-comments></app-comments>
       <!-- <ul class="list">
         <li class="list-item">
@@ -49,7 +44,6 @@
         </li>
       </ul> -->
     </div>
-    <!-- <div class="loader"></div> -->
     <app-loader v-if="loading"></app-loader>
   </div>
 </template>
@@ -106,13 +100,23 @@ export default {
     AppLoader
   },
   methods: {
+    capitalizeFirstLetter (string) {
+      return string.charAt(0).toUpperCase() + string.slice(1)
+    },
     submitHeandler () {
       console.group('Form Data')
       console.log('Согласен: ', this.selected)
       console.log('Текст: ', this.message)
       console.groupEnd()
-      this.selected = 'title'
-      this.message = ''
+      const component = {
+        componentName: 'App' + this.capitalizeFirstLetter(this.selected),
+        componentText: this.message
+      }
+      this.blocks.push(component)
+      console.log(this.blocks)
+
+      // this.selected = 'title'
+      // this.message = ''
     }
   }
 }
