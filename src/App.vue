@@ -7,22 +7,15 @@
       :selected="selected"
       @change:selected="selected = $event"
       >{{selected}}</app-select>
-
       <app-text-area
       v-model.trim="message"
       title="Значение"
       placeholder="введите сюда что-нибудь"
       ></app-text-area>
-
       <app-button color="primary" type="submit">{{added}}</app-button>
     </form>
-
     <div class="card card-w70">
-      <!-- <h1>Резюме Nickname</h1> -->
       <app-title></app-title>
-      <!-- <div class="avatar">
-        <img src="https://cdn.dribbble.com/users/5592443/screenshots/14279501/drbl_pop_r_m_rick_4x.png">
-      </div> -->
       <app-avatar></app-avatar>
       <app-subtitle :title="Опыт"></app-subtitle>
       <app-text></app-text>
@@ -31,18 +24,10 @@
   </div>
   <div class="container">
     <p>
-      <app-button color="primary" type="submit">{{download}}</app-button>
+      <app-button color="primary" type="submit" @click="getComments">{{download}}</app-button>
     </p>
     <div class="card">
-      <app-comments></app-comments>
-      <!-- <ul class="list">
-        <li class="list-item">
-          <div>
-            <p><strong>test@microsoft.com</strong></p>
-            <small>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, reiciendis.</small>
-          </div>
-        </li>
-      </ul> -->
+      <app-comments :comments="comments"></app-comments>
     </div>
     <app-loader v-if="loading"></app-loader>
   </div>
@@ -58,6 +43,7 @@ import AppAvatar from './components/AppAvatar.vue'
 import AppText from './components/AppText.vue'
 import AppComments from './components/AppComments.vue'
 import AppLoader from './components/AppLoader.vue'
+import axios from 'axios'
 export default {
   data () {
     return {
@@ -65,6 +51,7 @@ export default {
       message: '',
       loading: false,
       blocks: [],
+      comments: [],
       options: [
         {
           value: 'title',
@@ -117,6 +104,18 @@ export default {
 
       // this.selected = 'title'
       // this.message = ''
+    },
+    async getComments () {
+      const url = 'https://jsonplaceholder.typicode.com/comments?_limit=42'
+      const { data } = await axios.get(url)
+      this.comments = Object.keys(data).map(key => {
+        return {
+          id: data[key].id,
+          email: data[key].email,
+          body: data[key].body
+        }
+      })
+      console.log(this.comments)
     }
   }
 }
