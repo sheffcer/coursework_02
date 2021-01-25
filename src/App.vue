@@ -15,9 +15,14 @@
       <app-button color="primary" type="submit">{{added}}</app-button>
     </form>
     <div class="card card-w70">
-      <app-title></app-title>
-      <app-avatar></app-avatar>
-      <app-subtitle :title="Опыт"></app-subtitle>
+      <component
+      v-for="name in names"
+      :key="name"
+      :is="name"
+      ></component>
+      <!-- <app-title></app-title> -->
+      <!-- <app-avatar></app-avatar> -->
+      <!-- <app-subtitle :title="Опыт"></app-subtitle> -->
       <app-text></app-text>
       <h3 v-if="blocks.length !==0">Добавьте первый блок, чтобы увидеть результат</h3>
     </div>
@@ -52,6 +57,7 @@ export default {
       loading: false,
       blocks: [],
       comments: [],
+      names: ['AppTitle', 'AppSubtitle', 'AppAvatar', 'AppText'],
       options: [
         {
           value: 'title',
