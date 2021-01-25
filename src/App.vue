@@ -101,21 +101,29 @@ export default {
       }
       this.blocks.push(component)
       console.log(this.blocks)
-
-      // this.selected = 'title'
-      // this.message = ''
+      this.selected = 'title'
+      this.message = ''
     },
-    async getComments () {
-      const url = 'https://jsonplaceholder.typicode.com/comments?_limit=42'
-      const { data } = await axios.get(url)
-      this.comments = Object.keys(data).map(key => {
-        return {
-          id: data[key].id,
-          email: data[key].email,
-          body: data[key].body
-        }
-      })
-      console.log(this.comments)
+    getComments () {
+      this.loading = true
+      setTimeout(() => {
+        const url = 'https://jsonplaceholder.typicode.com/comments?_limit=42'
+        // this.loading = true
+        axios.get(url)
+          .then((response) => {
+            console.log(response)
+            const data = response.data
+            this.comments = Object.keys(data).map(key => {
+              return {
+                id: data[key].id,
+                email: data[key].email,
+                body: data[key].body
+              }
+            })
+          }, (error) => {
+            console.log(error)
+          })
+      }, 1500)
     }
   }
 }
