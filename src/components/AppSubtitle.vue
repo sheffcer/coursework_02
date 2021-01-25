@@ -1,11 +1,11 @@
 <template>
-  <h2>Опыт работы</h2>
+  <h2>{{message}}</h2>
 </template>
 
 <script>
 export default {
   props: {
-    title: String
+    message: String
   }
 }
 </script>

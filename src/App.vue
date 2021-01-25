@@ -19,6 +19,7 @@
       v-for="block in blocks"
       :key="block"
       :is="block.componentName"
+      :message="block.componentText"
       ></component>
       <!-- <app-title></app-title> -->
       <!-- <app-avatar></app-avatar> -->
@@ -117,7 +118,7 @@ export default {
         // this.loading = true
         axios.get(url)
           .then((response) => {
-            console.log(response)
+            // console.log(response)
             const data = response.data
             this.comments = Object.keys(data).map(key => {
               return {

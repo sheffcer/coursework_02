@@ -1,9 +1,12 @@
 <template>
-  <h1>Резюме Василия</h1>
+  <h1>{{message}}</h1>
 </template>
 
 <script>
 export default {
+  props: {
+    message: String
+  }
 }
 </script>
 
