@@ -16,15 +16,15 @@
     </form>
     <div class="card card-w70">
       <component
-      v-for="name in names"
-      :key="name"
-      :is="name"
+      v-for="block in blocks"
+      :key="block"
+      :is="block.componentName"
       ></component>
       <!-- <app-title></app-title> -->
       <!-- <app-avatar></app-avatar> -->
       <!-- <app-subtitle :title="Опыт"></app-subtitle> -->
-      <app-text></app-text>
-      <h3 v-if="blocks.length !==0">Добавьте первый блок, чтобы увидеть результат</h3>
+      <!-- <app-text></app-text> -->
+      <h3 v-if="blocks.length === 0">Добавьте первый блок, чтобы увидеть результат</h3>
     </div>
   </div>
   <div class="container">
