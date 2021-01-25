@@ -170,6 +170,10 @@ h3 {
     border-color: #e53935;
 }
 
+textarea.invalid {
+    border: 2px solid #e53935;
+}
+
 .form-checkbox {
     margin-bottom: 1rem;
 }

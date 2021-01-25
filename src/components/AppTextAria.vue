@@ -1,13 +1,15 @@
 <template>
   <div class="form-control">
     <label for="value">Значение</label>
-     <textarea
+    <textarea
+      :class="{invalid: error}"
       id="value"
       rows="3"
       :placeholder="placeholder"
       :value="modelValue"
       @input="onChange"
       ></textarea>
+      <small v-if="error">{{error}}</small>
   </div>
 </template>
 
@@ -17,7 +19,8 @@ export default {
   props: {
     placeholder: String,
     title: String,
-    modelValue: String
+    modelValue: String,
+    error: String
   },
   methods: {
     onChange (evt) {

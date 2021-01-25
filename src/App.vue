@@ -11,6 +11,8 @@
       v-model.trim="message"
       title="Значение"
       placeholder="введите сюда что-нибудь"
+      :error="errors.name"
+      :errorLength="errors.length"
       ></app-text-area>
       <app-button color="primary" type="submit">{{added}}</app-button>
     </form>
@@ -79,7 +81,10 @@ export default {
       ],
       submit: 'Отправить',
       added: 'Добавить',
-      download: 'Загрузить комментарии'
+      download: 'Загрузить комментарии',
+      errors: {
+        name: ''
+      }
     }
   },
   components: {
@@ -98,18 +103,20 @@ export default {
       return string.charAt(0).toUpperCase() + string.slice(1)
     },
     submitHeandler () {
-      console.group('Form Data')
-      console.log('Согласен: ', this.selected)
-      console.log('Текст: ', this.message)
-      console.groupEnd()
-      const component = {
-        componentName: 'App' + this.capitalizeFirstLetter(this.selected),
-        componentText: this.message
+      if (this.formIsValid()) {
+        console.group('Form Data')
+        console.log('Согласен: ', this.selected)
+        console.log('Текст: ', this.message)
+        console.groupEnd()
+        const component = {
+          componentName: 'App' + this.capitalizeFirstLetter(this.selected),
+          componentText: this.message
+        }
+        this.blocks.push(component)
+        console.log(this.blocks)
+        this.selected = 'title'
+        this.message = ''
       }
-      this.blocks.push(component)
-      console.log(this.blocks)
-      this.selected = 'title'
-      this.message = ''
     },
     getComments () {
       this.loading = true
@@ -131,6 +138,18 @@ export default {
             console.log(error)
           })
       }, 1500)
+    },
+    formIsValid () {
+      let isValid = true
+      if (this.message.length <= 2) {
+        this.errors.name = 'Поле не может быть пустым и меньше 3-х символов'
+        this.errors.length = this.message.length
+        console.log(this.error)
+        isValid = false
+      } else {
+        this.errors.name = null
+      }
+      return isValid
     }
   }
 }
